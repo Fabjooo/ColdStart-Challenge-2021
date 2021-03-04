@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       user: undefined,
-      errorMessage: undefined,
+      errorMessage: '',
     };
   },
   async created() {
@@ -38,7 +38,7 @@ export default {
   methods: {
     ...mapActions('orders', ['orderProductAction']),
     async order() {
-      this.errorMessage = '';
+      this.errorMessage = 'Your order is being processed.';
       try {
         await this.orderProductAction(this.id);
       } catch (error) {

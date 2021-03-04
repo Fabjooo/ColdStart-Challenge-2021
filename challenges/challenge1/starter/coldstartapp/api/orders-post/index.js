@@ -4,6 +4,10 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = async function (context, req) {
   // Get the user details from the request
   const user = getUser(req);
+  if (!user) {
+    context.res.status(401);
+    return;
+  }
 
   // Get the pre-order from the request
   
