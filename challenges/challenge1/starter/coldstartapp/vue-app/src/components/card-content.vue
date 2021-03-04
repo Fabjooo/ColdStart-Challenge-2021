@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       user: undefined,
-      errorMessage: '',
+      message: '',
     };
   },
   async created() {
@@ -38,12 +38,15 @@ export default {
   methods: {
     ...mapActions('orders', ['orderProductAction']),
     async order() {
-      this.errorMessage = 'Your order is being processed.';
+      this.message = 'Your order is being processed.';
       try {
         await this.orderProductAction(this.id);
+        this.message = 'Thank you for your order.';
       } catch (error) {
-        this.errorMessage = 'Unauthorized';
+        this.message = 'Something went wrong.';
       }
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      this.message = '';
     },
   },
 };
@@ -63,6 +66,7 @@ export default {
     </div>
     <div class="card-footer" v-if="user">
       <ButtonFooter @clicked="order" label="Order"></ButtonFooter>
-      </div>
+      <div class="card-footer-item" v-if="message">{{message}}</div>
+    </div>
   </div>
 </template>
