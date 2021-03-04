@@ -1,4 +1,5 @@
 <script>
+import { mapActions } from 'vuex';
 import ButtonFooter from '@/components/button-footer.vue';
 import getUserInfo from '../assets/js/userInfo';
 
@@ -28,12 +29,22 @@ export default {
   data() {
     return {
       user: undefined,
+      errorMessage: undefined,
     };
   },
   async created() {
     this.user = await getUserInfo();
   },
   methods: {
+    ...mapActions('orders', ['orderProductAction']),
+    async order() {
+      this.errorMessage = '';
+      try {
+        await this.orderProductAction(this.id);
+      } catch (error) {
+        this.errorMessage = 'Unauthorized';
+      }
+    },
   },
 };
 </script>
@@ -51,7 +62,7 @@ export default {
       <p class="description">{{ description }}</p>
     </div>
     <div class="card-footer" v-if="user">
-      <ButtonFooter label="Order"></ButtonFooter>
+      <ButtonFooter @clicked="order" label="Order"></ButtonFooter>
       </div>
   </div>
 </template>

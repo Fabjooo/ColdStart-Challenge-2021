@@ -12,6 +12,13 @@
       "type": "http",
       "direction": "out",
       "name": "res"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "queueName": "pre-orders",
+      "name": "preOrder",
+      "connection": "STORAGE_CONNECTION_STRING"
     }
   ]
 }
