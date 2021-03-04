@@ -1,6 +1,12 @@
 <script>
+import ButtonFooter from '@/components/button-footer.vue';
+import getUserInfo from '../assets/js/userInfo';
+
 export default {
   name: 'CardContent',
+  components: {
+    ButtonFooter,
+  },
   props: {
     id: {
       type: String,
@@ -19,6 +25,14 @@ export default {
       default: () => '',
     },
   },
+  data() {
+    return {
+      user: undefined,
+    };
+  },
+  async created() {
+    this.user = await getUserInfo();
+  },
   methods: {
   },
 };
@@ -36,5 +50,8 @@ export default {
       </div>
       <p class="description">{{ description }}</p>
     </div>
+    <div class="card-footer" v-if="user">
+      <ButtonFooter label="Order"></ButtonFooter>
+      </div>
   </div>
 </template>
